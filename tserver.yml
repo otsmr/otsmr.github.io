@@ -1,0 +1,9 @@
+services:
+  tsmreu:
+    image: caddy:latest
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.tsmreu.rule=Host(`tsmr.local`)
+    restart: always
+    volumes:
+      - ./projects/tsmreu:/usr/share/caddy/
