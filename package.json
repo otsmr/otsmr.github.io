@@ -1,0 +1,15 @@
+{
+  "name": "tsmreu",
+  "version": "1.0.0",
+  "description": "My webpage",
+  "main": "build.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "marked": "^9.1.5"
+  }
+}
