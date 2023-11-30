@@ -14,7 +14,7 @@ vulnerability in a binary running on the TL-WR902AC but was not successful. This
 to find such a vulnerability.
 
 <ul class="links">
-  <li><a href="blackbox-fuzzing.html">Article</a></li>
+  <li><a href="blackbox-fuzzing.html">Blog post</a></li>
   <li><a href="https://github.com/otsmr/blackbox-fuzzing">GitHub</a></li>
 </ul>
 <br />
@@ -28,9 +28,9 @@ elliptic curves or AES. During the implementation, I looked at various attacks i
 them have become CTF challenges (see VulnTLS for more), such as Dual_EC, an NSA backdoor.
 
 <ul class="links">
+  <li><a href="anothertls.html">Blog post</a></li>
   <li><a href="https://github.com/otsmr/anothertls">AnotherTLS</a></li>
   <li><a href="https://github.com/otsmr/vulntls">VulnTLS</a></li>
-  <li><a href="https://github.com/otsmr/AnotherTLS/blob/21dd819d84457801e3f3efbb4013f61ceec07c1c/AnotherTLS.pdf">Term Paper</a></li>
 </ul>
 <br />
 
