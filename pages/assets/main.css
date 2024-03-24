@@ -8,6 +8,7 @@ body {
 
 #header {
     letter-spacing: 3px;
+    width: min-content;
     margin: 0 auto;
 }
 
