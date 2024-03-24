@@ -1,8 +1,8 @@
 # My work
 
-My passion is security, so everything I do is somehow related to security.
-I study "Corporate and Information Security" at the University of Applied Sciences Offenburg.
-Below is some of the work I have done in the past or am currently working on.
+Hi, I am someone who likes to do security related things or learn something
+new. I'm currently trying my luck with rust and fuzzing. See what I'm working
+on below, it's nothing crazy but it's fun.
 
 <br />
 
@@ -55,7 +55,7 @@ a cheap router and took a closer look. As expected, the security was not really 
 to find a security vulnerability with a CVE score of 8.8 in no time.
 
 <ul class="links">
-  <li><a href="https://raw.githubusercontent.com/otsmr/internet-of-vulnerable-things/main/Internet_of_Vulnerable_Things.pdf">Term Paper</a> </li> 
+  <li><a href="https://raw.githubusercontent.com/otsmr/internet-of-vulnerable-things/main/Internet_of_Vulnerable_Things.pdf">Term Paper</a> </li>
   <li><a href="https://github.com/otsmr/internet-of-vulnerable-things">Exploit</a></li>
 </ul>
 

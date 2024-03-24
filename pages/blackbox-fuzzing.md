@@ -1,7 +1,8 @@
 # Blackbox-Fuzzing of IoT Devices Using the Router TL-WR902AC as Example
 
-This is the HTML version of my term paper which can be downloaded as PDF
-[here](https://github.com/otsmr/blackbox-fuzzing).
+All files created in context of this term paper are also published in full on GitHub and can be
+accessed using the following URL:
+[otsmr/blackbox-fuzzing](https://github.com/otsmr/blackbox-fuzzing).
 
 ## Introduction
 
@@ -25,10 +26,6 @@ used, and what a good fuzzing target should consist of. The second part then des
 develop and debug a harness that is able to fuzz a specific function in a binary. Then the developed
 harness is used by AFL++ to fuzz the target function. In the following, a short background is given
 and what the current state of the art is when it comes to IoT device fuzzing.
-
-All files created in context of this term paper are also published in full on GitHub and can be
-accessed using the following URL:
-[otsmr/blackbox-fuzzing](https://github.com/otsmr/blackbox-fuzzing).
 
 ### State of the Art
 
@@ -120,7 +117,7 @@ interaction does not mean the binary is also directly accessible over the networ
 binaries are listening, we can use the UART root shell, which was already established in
 [\[iovt\]](https://raw.githubusercontent.com/otsmr/internet-of-vulnerable-things/main/Internet_of_Vulnerable_Things.pdf).
 
-<div id="c2"></div>  
+<div id="c2"></div>
 
 ```txt
  ~ # netstat -tulpn
@@ -383,7 +380,7 @@ the binaries are compiled for the `mipsel` architecture, the emulator QEMU is us
 binary. The basic fuzzing setup used in this paper is mostly inspired by the blog entry "Firmware
 Fuzzing 101" by Adam Van Prooyen [\[b101\]](https://www.mayhem.security/blog/firmware-fuzzing-101).
 
-### Fuzzing environment 
+### Fuzzing environment
 
 To easily create a reproducible fuzzing environment, Docker is the best choice. We created a
 Dockerfile that installs every necessary tool, like a cross-compiler for `mipsel` CPU architecture
@@ -529,7 +526,7 @@ void __uClibc_main(void *main, int argc, char** argv)
   fuzz_buf[fuzz_buf_len] = 0;
 
   // Call the target functions
-  uint8_t parsed_data[220]; 
+  uint8_t parsed_data[220];
   parser_request_init(parsed_data, 8);
   int status = parser_append(parsed_data, fuzz_buf, fuzz_buf_len);
   printf("Response is %d\n", status);
