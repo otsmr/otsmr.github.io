@@ -2,15 +2,6 @@
 
 [Rechte der betroffenen Person](https://dsgvo-gesetz.de/kapitel-3/)
 
-## Analytics
-
-Um einige Zahlen über meine Website zu erhalten, verwende ich
-[umami](https://umami.is/), eine [selbst](https://bigbrotheriswatchingyou.de/)
-gehostete Analyselösung. Die erhobenen Daten können
-[hier](https://bigbrotheriswatchingyou.de/share/46k6whDcxyZmm9Z7/tsmr.eu)
-eingesehen werden.
-
-
 ## Hoster
 
 [Source](https://opr.vc/docs/hosting/github_pages/)
