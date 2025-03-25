@@ -7,6 +7,15 @@ on below, it's nothing crazy but it's fun.
 
 <br />
 
+## twonly - The European Alternative
+Keywords: Android & iOS App, Signal-Protocol
+
+twonly, a privacy-friendly way to connect with friends through secure, spontaneous image sharing.
+
+<ul class="links">
+  <li><a href="https://twonly.eu">Website</a></li>
+</ul>
+<br />
 
 ## Finding Security Vulnerabilities in Open-Source Repos
 Keywords: Pentesting, Open-Source, Afl.rs
