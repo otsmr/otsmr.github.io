@@ -406,7 +406,7 @@ For the client certificate request the fuzzer found multiple crashes in a matter
   </figcaption>
 </figure>
 
-After debugging the crashe could be identified as an integer underflow because of a wrong size check.
+After debugging, the crashes could be identified as an integer underflow because of a wrong size check.
 
 <figure>
   <p> <img src="hackercontest/tlse-wrong_size_check.png" style="width:80.0%" /></p>
