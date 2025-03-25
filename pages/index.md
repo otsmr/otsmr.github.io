@@ -12,7 +12,7 @@ on below, it's nothing crazy but it's fun.
 Keywords: Pentesting, Open-Source, Afl.rs
 
 This winter semester I took part in the TU Darmstadt [Hacker
-Contest](https://www.usd.de/abschluss-hacker-contest-wise-2023-2024/), where we had an exercise in which we had to find
+Contest](https://www.usd.de/tag/hacker-contest/), where we had an exercise in which we had to find
 security vulnerabilities in open source repositories. In this blog post I will share my findings. It's nothing crazy,
 but it was still fun to find them.
 

@@ -1,7 +1,7 @@
 # Finding Security Vulnerabilities in Open-Source Repos
 
 This winter semester I took part in the TU Darmstadt [Hacker
-Contest](https://www.usd.de/abschluss-hacker-contest-wise-2023-2024/), where we had an exercise in which we had to find
+Contest](https://www.usd.de/tag/hacker-contest/), where we had an exercise in which we had to find
 security vulnerabilities in open source repositories. In this blog post I will share my findings. It's nothing crazy,
 but it was still fun to find them. The results of the exercise were two XSS in [two](#passky) [different](#teampass) password managers by analysing the source code and an integer underflow in a [TLS server](#tlse) by fuzzing.
 
