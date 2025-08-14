@@ -104,14 +104,14 @@ for corpus in corpuses:
 
 As fuzzing the network stack is one of my main goals, almost all trait implementations required to initialize the `profuzz_core` crate can be found in the `profuzz_common` crate.
 
-The full example can be found on [Github](https://github.com/otsmr/profuzz/example/profuzz_network_stack).
+The full example can be found on [Github](https://github.com/otsmr/profuzz/tree/main/example/profuzz_network_stack).
 
-The provided example aims at a target with the following fictive requirements, which are typical for me at work:
+The provided example aims at a target with the following fictive options, which are typical for me at work:
 
 1. To be fuzzed: Ethernet, VLAN, IPv4, UDP, TCP, Payload
-3. There is a TCP server reachable without a VLAN tag on port 1330
-2. The target does listen on multiple ports, either for UDP or TCP.
-4. The targeted listening ports are only reachable on VLANs 13 and 37.
+2. The target does listen on multiple ports, either for UDP or TCP running different applications
+3. The ports which will be fuzzed are only reachable on VLANs 13 and 37
+4. The TCP port which will be used for the Healthcheck does not require a VLAN tag
 
 The first step would be to create corpus files. This can be done by using a Wireshark trace and writing each packet as raw bytes in files stored in the folder `corpus`.
 
@@ -284,6 +284,23 @@ cargo run --bin profuzz_tplink_tmdp fuzz --in-dir ./example/profuzz_tplink_tmdp/
 ```
 
 Directly after starting, the fuzzer found a way to reset the router by setting the `function_id` to `2560`. After modifying the mutation to never set the `function_id` to this value, the fuzzer found in a matter of minutes two additional ways to reset the router and also found 8 more ways to trigger the health check to report a crash. But now it comes the hard part: debugging the crashes on the target in order to identify the root cause of the crash. But this is beyond this blog post introducing my new generic protocol fuzzer but will hopefully be discussed in my next blog post about exploiting one of the identified crashes to gain a remote code execution.
+
+## Triaging a crash
+
+When fuzzing, for example, UDP, it is often not clear which exact packet did cause the target to crash. For this, profuzz does store all buffers sent to the target between the last positive health check and the negative health check. These buffers are stored in a JSON file in the output directory. To identify the packet causing the crash, the `triage` command can be used:
+
+```plain
+Usage: profuzz_network_stack triage --out-dir <OUT_DIR>
+
+Options:
+  -o, --out-dir <OUT_DIR>  output directory for fuzzer findings
+  -h, --help               Print help
+```
+
+The triage command will send all buffers while performing a health check after every send buffer to check if the target crashed. In case the target crashed, profuzz will search for the most similar send buffer that did not cause a crash using the Hamming distance and highlight all differences.
+
+To see this in more action and with more details, you can use the `target_tcp_server` as a target as described at the end of the [README](https://github.com/otsmr/profuzz#running-the-profuzz_tplink_tmdp-example).
+
 
 ## Conclusion
 
