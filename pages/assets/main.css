@@ -1,9 +1,23 @@
+@font-face {
+    /* font-display: swap; */
+    font-family: 'Google Sans Code';
+    font-style: normal;
+    font-weight: 300 800;
+    font-display: swap;
+    src: url('/assets/sans.woff2') format('woff2')
+}
+
 body {
     margin: 0;
     padding: 0;
     background: #181a1b;
     color: #aaaaaa;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Google Sans Code', 'Courier New', Courier, monospace;
+}
+
+code {
+    font-family: 'Google Sans Code', monospace !important;
+    font-size: 14px;
 }
 
 #header {
@@ -12,8 +26,25 @@ body {
     margin: 0 auto;
 }
 
+p:has(> .metadata) {
+    margin: -10px 0;
+    padding: 0;
+    line-height: 0;
+}
+
+.metadata {
+    font-size: 13px;
+    line-height: 1;
+    color: gray;
+}
+
 p {
-    line-height: 21px;
+    font-size: 14pt;
+    line-height: 1.5;
+}
+
+h2 {
+    margin-top: 100px;
 }
 
 h3 {
@@ -25,21 +56,37 @@ ul.links {
     display: inline-flex;
     list-style: none;
     padding: 0;
+    margin: 0 0 40px 0;
 }
 
 ul.links li {
     margin-right: 20px;
 }
 
-.container p {
-    text-align: justify;
-}
-
 .container {
     width: 95%;
-    max-width: 700px;
+    max-width: 800px;
     margin: 0 auto;
     padding-top: 50px;
+}
+
+figure {
+    margin: 0 20px;
+}
+
+figure p {
+    margin: 0;
+    padding: 0;
+    line-height: 2;
+    font-size: 14px;
+}
+
+img {
+    width: 100% !important;
+}
+
+pre code.hljs {
+    border-radius: 12px;
 }
 
 .block {
