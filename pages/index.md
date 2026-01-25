@@ -6,6 +6,17 @@ on below, it's nothing crazy but it's fun.
 
 <br />
 
+## Binary Rewriting across different Architectures
+<span class="metadata">2026-01-125• Binary-Rewriting, Fuzzing</span>
+
+This winter semester, as part of a seminar offered by [SEEMOO](https://www.seemoo.tu-darmstadt.de/teaching/seminars/), I wrote a seminar paper on binary rewriting, which allows the modification of compiled binary files without source code, enabling use cases such as fuzzing or hardening proprietary binary files. If you are interested, you can check out the blog post.
+
+<ul class="links">
+  <li><a href="binary-rewriting.html">Blog post</a></li>
+</ul>
+
+<br />
+
 ## Introducing my new Generic Network Protocol Fuzzer in Rust
 <span class="metadata">2025-08-14 • Rust, Open-Source, Fuzzing</span>
 
