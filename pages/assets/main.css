@@ -179,3 +179,38 @@ footer {
     width: 100%;
     opacity: 0.1;
 }
+
+.social-links {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    justify-content: center;
+    margin: 30px auto;
+}
+
+.social-link {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background-color: #888;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.social-link:hover {
+    background-color: #ffffff;
+}
+
+.social-link.github {
+    mask: url('icons/github.svg') no-repeat center / contain;
+    -webkit-mask: url('icons/github.svg') no-repeat center / contain;
+}
+
+.social-link.codeberg {
+    mask: url('icons/codeberg.svg') no-repeat center / contain;
+    -webkit-mask: url('icons/codeberg.svg') no-repeat center / contain;
+}
+
+.social-link.rss {
+    mask: url('icons/rss.svg') no-repeat center / contain;
+    -webkit-mask: url('icons/rss.svg') no-repeat center / contain;
+}

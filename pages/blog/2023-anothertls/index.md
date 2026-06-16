@@ -1,3 +1,13 @@
+---
+title: AnotherTLS and VulnTLS
+date: 2023-12-21
+description: To learn Rust and cryptography at the same time I implemented the TLSv1.3 from scratch. The implementation includes all cryptographic operations like elliptic curves or AES.
+keywords: TLS, Cryptography, Rust, CTF
+links:
+  - AnotherTLS | https://github.com/otsmr/anothertls
+  - VulnTLS | https://github.com/otsmr/vulntls
+---
+
 # Implementing TLSv1.3 to Learn Rust and Cryptography
 
 This is the HTML version of my term paper which can be downloaded as PDF
@@ -396,7 +406,7 @@ CLIENT_TRAFFIC_SECRET_0 71f0... 1491...68ea
 The TLS handshake needs at least three TCP packets (represented by the arrow) which holds one or
 more TLS records.
 
-<p style="text-align: center"><img src="anothertls/handshake.png" style="width:90.0%" /></p>
+<p style="text-align: center"><img src="assets/handshake.png" style="width:90.0%" /></p>
 
 Each record which is sent during the TLS connection is represented by a box. Gray boxes are
 transmitted in plaintext, blue indicate records encrypted using the handshake traffic secret and

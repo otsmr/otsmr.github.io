@@ -1,3 +1,10 @@
+---
+title: Binary Rewriting across different Architectures
+date: 2026-01-25
+description: I wrote a seminar paper on binary rewriting, which allows the modification of compiled binary files without source code, enabling use cases such as fuzzing or hardening proprietary binary files.
+keywords: Binary-Rewriting, Fuzzing
+---
+
 <link rel="stylesheet" href="assets/css/v5-font-face.min.css">
 <link rel="stylesheet" href="assets/css/all.min.css">
 
@@ -51,7 +58,7 @@ Trampolines are the easiest way to instrument a binary; they only patch the targ
 <em>Instruction punning</em>: Instruction punning is the same as jump-based, but it increases the instruction coverage of the 5-byte-sized jump problem. For this, it still overwrites the original instruction but keeps the second instruction intact while using it as the MSB of the jump target address, as shown in <a href="#e9patch_instruction_punning">Figure 1</a>. These punned instructions are therefore used twice, first for the jump target and then interpreted as an instruction. As the second instruction then controls the MSB of the target address, this only works if the binary rewriter can place the instruction there.
 
 <figure id="e9patch_instruction_punning">
-    <img src="./binary-rewriting/e9patch_instruction_punning.png" style="width: 90%">
+    <img src="./assets/e9patch_instruction_punning.png" style="width: 90%">
     <figcaption>Figure 1: Example of instruction punning. Image source: <span id="loc-1">[</span><a href="#loc-28" role="doc-biblioref">8</a>]</figcaption>
 </figure>
 
@@ -159,7 +166,7 @@ While trampolines are the easiest way, the following two challenges are fundamen
 <p>ARM is a 4-byte fixed instruction set requiring every 64-bit pointer to be constructed using pointer arithmetic. As in ARM, all pointer constructions do start with either <code>adrp</code> or <code>adr</code>, <a href="#sc2">SC2</a> is not an issue. The hard part lies in <a href="#sc3">SC3</a>, because the required pointer arithmetic does not follow any rule. As current techniques all use heuristics to calculate the resulting pointer, ARMore introduces a new technique that solves <a href="#sc3">SC3</a> sound. For this, the original layout of the binary as shown in <a href="#armore_replicate">Figure 2</a> is replicated. In this replicated layout, the original <code>.text</code> section is replaced by the <code>.rebound_table</code>. Then the <code>adrp/adr</code> instructions are symbolized to point to the same address on the replicated layout, while the remaining instructions calculating the offset are untouched. As the resulting pointer then points to the replicated layout, the offset remains the same, and when dereferenced, the rebound table will redirect the program counter to the new address in the instrumented code. This technique also solves <a href="#sc4">SC4</a> as they will be redirected by the rebound table to the correct address.</p>
 
 <figure id="armore_replicate">
-    <img src="./binary-rewriting/armore_replicate.png" style="width: 50% !important; margin: 0 auto; display: block;">
+    <img src="./assets/armore_replicate.png" style="width: 50% !important; margin: 0 auto; display: block;">
     <figcaption>Figure 2: Layout replication done by ARMore. On the left is the original binary, and on the right is the section layout of the rewritten binary. Image source: [<a href="#loc-26" role="doc-biblioref">6</a>]</figcaption>
 </figure>
 
@@ -188,7 +195,7 @@ While trampolines are the easiest way, the following two challenges are fundamen
 <p>E9Patch [<a href="#loc-28" role="doc-biblioref">8</a>] was first introduced in 2020 and then improved in 2022 <span id="loc-9">[</span><a href="#loc-29" role="doc-biblioref">9</a>]. E9Patch is trampoline-based and removes all requirements for control-flow recovery, which is required for x86 in case an instruction is smaller than 5 bytes, as the jump would overwrite the following instructions. To remove this requirement, E9Patch introduces three new techniques shown in <a href="#e9patch_tactics">Figure 3</a>.</p>
 
 <figure id="e9patch_tactics">
-    <img src="./binary-rewriting/e9patch_tactics.png" style="width: 50% !important; margin: 0 auto; display: block;">
+    <img src="./assets/e9patch_tactics.png" style="width: 50% !important; margin: 0 auto; display: block;">
     <figcaption>Figure 3: B2 shows the original instruction punning as a baseline. Tactic 1 is the padded jumps, Tactic 2 is successor eviction, and Tactic 3 is neighbor eviction. Image source: [<a href="#loc-28" role="doc-biblioref">8</a>]</figcaption>
 </figure>
 

@@ -1,3 +1,10 @@
+---
+title: Finding Security Vulnerabilities in Open-Source Repos
+date: 2025-03-25
+description: This winter semester I took part in the TU Darmstadt Hacker Contest, where we had an exercise in which we had to find security vulnerabilities in open source repositories.
+keywords: Pentesting, Open-Source, Afl.rs
+---
+
 # Finding Security Vulnerabilities in Open-Source Repos
 
 This winter semester I took part in the TU Darmstadt [Hacker
@@ -19,7 +26,7 @@ Searching for `innerHTML` in the JavaScript code for the admin page immediately 
 hits. The most promising is shown below.
 
 <figure>
-  <p> <img src="hackercontest/passky-innerHtml.png" style="width:90.0%" /></p>
+  <p> <img src="assets/passky-innerHtml.png" style="width:90.0%" /></p>
   <figcaption>
     <p>Figure 1: Injection user controlled input using innerHTML.</p>
   </figcaption>
@@ -29,7 +36,7 @@ Here user controlled data is loaded as JSON and then injected into the HTML dom 
 
 <div id="f2"></div>
 <figure>
-  <p> <img src="hackercontest/passky-email-sanitation.png" style="width:90.0%" /></p>
+  <p> <img src="assets/passky-email-sanitation.png" style="width:90.0%" /></p>
   <figcaption>
     <p>Figure 2: E-Mail sanitation</p>
   </figcaption>
@@ -70,7 +77,7 @@ deleted (including all of their data and stored passwords).
 
 
 <figure>
-  <p> <img src="hackercontest/passky-deleting.png" style="width:90.0%" /></p>
+  <p> <img src="assets/passky-deleting.png" style="width:90.0%" /></p>
   <figcaption>
     <p>Figure 3: Deleting all the accounts.</p>
   </figcaption>
@@ -120,7 +127,7 @@ the `tags` are not `htmlspecialchars` encoded but decoded as shown below.
 
 
 <figure>
-  <p> <img src="hackercontest/teampass-vulncode.png" style="width:80.0%" /></p>
+  <p> <img src="assets/teampass-vulncode.png" style="width:80.0%" /></p>
   <figcaption>
     <p>Figure 4: Tags are htmlspecialchars_decode</p>
   </figcaption>
@@ -130,7 +137,7 @@ the `tags` are not `htmlspecialchars` encoded but decoded as shown below.
 The tags are then later injected using JQuery in a insecure way leading to an XSS.
 
 <figure>
-  <p> <img src="hackercontest/teampass-script_tag.png" style="width:90.0%" /></p>
+  <p> <img src="assets/teampass-script_tag.png" style="width:90.0%" /></p>
   <figcaption>
     <p>Figure 5: Tags are included insecurely</p>
   </figcaption>
@@ -197,7 +204,7 @@ The script which is then executed first loads a list of all passwords. It then s
 controlled server on which the attacker can get the passwords as shown below.
 
 <figure>
-  <p> <img src="hackercontest/teampass-password_exfiltrate.png" style="width:90.0%" /></p>
+  <p> <img src="assets/teampass-password_exfiltrate.png" style="width:90.0%" /></p>
   <figcaption>
     <p>Figure 6: Passwords which where exfiltrate by the XSS</p>
   </figcaption>
@@ -304,7 +311,7 @@ Since my emails were ending up in spam with the main author and a main contribut
 The patch is straight forward as they only have to replace the decode with the encode function as shown below.
 
 <figure>
-  <p> <img src="hackercontest/teampass-vulncode.png" style="width:80.0%" /></p>
+  <p> <img src="assets/teampass-vulncode.png" style="width:80.0%" /></p>
   <figcaption>
     <p>Figure 7: Fix</p>
   </figcaption>
@@ -400,7 +407,7 @@ For the client certificate request the fuzzer found multiple crashes in a matter
 
 
 <figure>
-  <p> <img src="hackercontest/tlse-fuzzer_crashes.png" style="width:80.0%" /></p>
+  <p> <img src="assets/tlse-fuzzer_crashes.png" style="width:80.0%" /></p>
   <figcaption>
     <p>Figure 8: AFL++ found multiple crashes.</p>
   </figcaption>
@@ -409,7 +416,7 @@ For the client certificate request the fuzzer found multiple crashes in a matter
 After debugging, the crashes could be identified as an integer underflow because of a wrong size check.
 
 <figure>
-  <p> <img src="hackercontest/tlse-wrong_size_check.png" style="width:80.0%" /></p>
+  <p> <img src="assets/tlse-wrong_size_check.png" style="width:80.0%" /></p>
   <figcaption>
     <p>Figure 9: Wrong size check leading to an integer underflow.</p>
   </figcaption>
@@ -437,7 +444,7 @@ The patch is to change the comparison parameters to ensure that `size` is smalle
 subtracted from it.
 
 <figure>
-  <p> <img src="hackercontest/tlse-fix.png" style="width:80.0%" /></p>
+  <p> <img src="assets/tlse-fix.png" style="width:80.0%" /></p>
   <figcaption>
     <p>Figure 10: Fix.</p>
   </figcaption>

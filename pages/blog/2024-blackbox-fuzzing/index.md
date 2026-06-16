@@ -1,3 +1,12 @@
+---
+title: Blackbox-Fuzzing of IoT Devices Using the Router TL-WR902AC as Example
+date: 2024-03-13
+description: In my term paper about the "Internet of Vulnerable Things" I wanted to find a memory-related vulnerability in a binary running on the TL-WR902AC but was not successful. This time I use fuzzing.
+keywords: AFL++, TP-LINK
+links:
+  - GitHub | https://github.com/otsmr/blackbox-fuzzing
+---
+
 # Blackbox-Fuzzing of IoT Devices Using the Router TL-WR902AC as Example
 
 All files created in context of this term paper are also published in full on GitHub and can be
@@ -181,7 +190,7 @@ the payload.
 
 <div id="f1"></div>
 <figure>
-  <p> <img src="blackbox-fuzzing/ghidra_search.png" style="width:90.0%" /></p>
+  <p> <img src="assets/ghidra_search.png" style="width:90.0%" /></p>
   <figcaption>
     <p>Figure 1: Using Ghidra to search for parsing functions.</p>
   </figcaption>
@@ -341,7 +350,7 @@ binary protocol is not the length field, but the use of the function ID and func
 
 
 <figure id="f2">
-  <p><img src="blackbox-fuzzing/ghidra_tmpd.png" style="width:90.0%" /></p>
+  <p><img src="assets/ghidra_tmpd.png" style="width:90.0%" /></p>
   <figcaption>
     <p style="text-align: center">Figure 2: Reversed function from tmpd which parses the function id and their parameters.</p>
   </figcaption>
@@ -356,7 +365,7 @@ or interpreted as a string. Instead of manually reversing and searching the over
 which would be time-consuming, we can use a fuzzer which would do this automatically.
 
 <figure id="f3">
-<p><img src="blackbox-fuzzing/tmpd_function_list.png"
+<p><img src="assets/tmpd_function_list.png"
 style="width:90.0%" /></p>
 <figcaption><p style="text-align: center">Figure 3: Reversed function from tmpd which parses the function ID
 and its parameters.</p></figcaption>
@@ -682,7 +691,7 @@ extracted in plaintext from the browser using the debugger shown in [Figure 4](#
 <div id="f4"></div>
 
 <figure>
-  <p><img src="blackbox-fuzzing/firefox.png" style="width:95.0%" /></p>
+  <p><img src="assets/firefox.png" style="width:95.0%" /></p>
 <figcaption><p style="text-align: center">Figure 4: Extracting the data bevor encryption.</p></figcaption>
 </figure>
 
@@ -740,7 +749,7 @@ input. When started, AFL++ shows the progress using the terminal UI shown in [Fi
 
 <div id="f5"></div>
 <figure>
-<p><img src="blackbox-fuzzing/afl++.png" style="width:95.0%" /></p>
+<p><img src="assets/afl++.png" style="width:95.0%" /></p>
 <figcaption><p style="text-align: center">Figure 5: The status screen from AFL++.</p></figcaption>
 </figure>
 

@@ -1,8 +1,17 @@
+---
+title: Introducing my new Generic Network Protocol Fuzzer in Rust
+date: 2025-08-14
+description: This blog post introduces my new generic approach to easily create a fast and easy-to use protocol fuzzer for custom targets.
+keywords: Rust, Open-Source, Fuzzing
+links:
+  - GitHub | https://github.com/otsmr/profuzz
+---
+
 # Introducing my new Generic Network Protocol Fuzzer in Rust
 
 This blog post introduces my new open source [Generic Network Protocol Fuzzer](https://github.com/otsmr/profuzz) written in Rust.
 
-![Screenshot of the TUI provided by the profuzz_core crate.](generic-protocol-fuzzer/tui.png)
+![Screenshot of the TUI provided by the profuzz_core crate.](assets/tui.png)
 
 When I am not working on my European Snapchat alternative [twonly](https://twonly.eu) I do pentests of embedded devices, either during [my studies](https://github.com/otsmr/internet-of-vulnerable-things) or at work looking into ECUs running in a vehicle. When doing such pentests, one of the most promising tools is fuzzing. I usually start with setting up Afl++ when either the source code is available or, in case the source code is missing, I [emulate the binary with QEMU](https://tsmr.eu/blackbox-fuzzing.html). But when I am not in the possession of the source code and do not have any binary to work with I use [boofuzz](https://boofuzz.readthedocs.io/en/stable/), a network protocol fuzzer. Because network-based fuzzing is not as efficient as using AFL++ with coverage, I use them more as a starter to find low-hanging fruit without having to put a lot of effort into a working hardware debugging setup. My ultimate goal is to integrate a fuzzing-first approach into my pentesting tool at work. However, I quickly reached the limits of Boofuzz. Probably because it is written in Python it is kinda slow. It is also hard to integrate into my current tooling, which is written in Rust. As I also want to use the fuzzer for all kinds of other targets like a [TP-Link router](https://tsmr.eu/blackbox-fuzzing.html) I decided to create a generic network protocol fuzzer. 
 
@@ -62,7 +71,7 @@ if let Some(bytes) = ether.build() {
 
 <div id="f1"></div>
 <figure>
-  <p> <img src="generic-protocol-fuzzer/structure.png" style="width:90.0%" /></p>
+  <p> <img src="assets/structure.png" style="width:90.0%" /></p>
   <figcaption>
     <p>Figure 1: The generic architecture of profuzz.</p>
   </figcaption>
@@ -249,7 +258,7 @@ The binary protocol is parsed by the `tmpd` binary using the code shown in [Figu
 
 <div id="f2"></div>
 <figure>
-  <p> <img src="https://tsmr.eu/blackbox-fuzzing/ghidra_tmpd.png" style="width:90.0%" /></p>
+  <p> <img src="/blog/2024-blackbox-fuzzing/assets/ghidra_tmpd.png" style="width:90.0%" /></p>
   <figcaption>
     <p>Figure 2: Function in the `tmpd` binary that parses the custom binary protocol.</p>
   </figcaption>
@@ -259,7 +268,7 @@ Then the payload of the packet with some other information is used as parameters
 
 <div id="f3"></div>
 <figure>
-  <p> <img src="https://tsmr.eu/blackbox-fuzzing/tmpd_function_list.png" style="width:90.0%" /></p>
+  <p> <img src="/blog/2024-blackbox-fuzzing/assets/tmpd_function_list.png" style="width:90.0%" /></p>
   <figcaption>
     <p>Figure 3: Lookup table in the `tmpd` binary that decides which function pointer is executed.</p>
   </figcaption>
