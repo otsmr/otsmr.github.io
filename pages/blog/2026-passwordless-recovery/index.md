@@ -159,3 +159,8 @@ As this protocol is designed to only recover small amounts of data (the secret k
 - The trusted friends are unable to guess the user's PIN with under 10 attempts.
 - The trusted friends are unable to access the user's inbox.
 - In case of no second factor, the trusted friends (at least 4) do not collude.
+
+
+## Contact
+
+If you have found something, please send either an [email](mailto:security@tsmr.eu) or find me on Signal: tobi.02.
