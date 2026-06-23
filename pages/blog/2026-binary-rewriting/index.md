@@ -4,10 +4,6 @@ date: 2026-01-25
 description: I wrote a seminar paper on binary rewriting, which allows the modification of compiled binary files without source code, enabling use cases such as fuzzing or hardening proprietary binary files.
 keywords: Binary-Rewriting, Fuzzing
 ---
-
-<link rel="stylesheet" href="assets/css/v5-font-face.min.css">
-<link rel="stylesheet" href="assets/css/all.min.css">
-
 # Binary Rewriting across different Architectures
 
 This blog post is the result of a seminar paper I wrote during my studies at TU Darmstadt in a course offered by [SEEMOO](https://www.seemoo.tu-darmstadt.de/teaching/seminars/).

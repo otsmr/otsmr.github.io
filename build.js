@@ -4,6 +4,20 @@ import fs from 'fs/promises';
 import path from 'path';
 import { marked } from 'marked';
 
+function renderMarkdown(content) {
+    let htmlContent = marked(content);
+    htmlContent = htmlContent.replace(/<pre><code class="language-mermaid">([\s\S]*?)<\/code><\/pre>/g, (match, code) => {
+        const decoded = code
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&amp;/g, '&')
+            .replace(/&quot;/g, '"')
+            .replace(/&#39;/g, "'");
+        return `<pre class="mermaid">${decoded}</pre>`;
+    });
+    return htmlContent;
+}
+
 const pagesDir = './pages/';
 const buildDir = './build/';
 const siteBaseUrl = 'https://tsmr.eu';
@@ -25,16 +39,16 @@ function parseFrontMatter(content) {
     const yamlBlock = match[1];
     const body = match[2];
     const meta = {};
-    
+
     const lines = yamlBlock.split('\n');
     let currentKey = null;
     let isInsideLinks = false;
     meta.links = [];
-    
+
     for (let line of lines) {
         const trimmed = line.trim();
         if (!trimmed) continue;
-        
+
         if (trimmed.startsWith('links:')) {
             isInsideLinks = true;
             currentKey = 'links';
@@ -55,14 +69,14 @@ function parseFrontMatter(content) {
             }
         }
     }
-    
+
     return { meta, body };
 }
 
 function generateBlogListHtml(posts) {
     // Sort posts by date descending
     const sorted = [...posts].sort((a, b) => b.date.localeCompare(a.date));
-    
+
     let markdown = '';
     for (const post of sorted) {
         markdown += `## ${post.title}\n`;
@@ -83,26 +97,26 @@ const convertBlogPost = async (slug) => {
     const postDir = path.join(pagesDir, 'blog', slug);
     const mdPath = path.join(postDir, 'index.md');
     const destDir = path.join(buildDir, 'blog', slug);
-    
+
     await fs.mkdir(destDir, { recursive: true });
-    
+
     const data = await fs.readFile(mdPath, 'utf8');
     const { meta, body } = parseFrontMatter(data);
-    
+
     const title = meta.title || "TSMR.eu";
     const date = meta.date || "";
     const description = meta.description || "";
     const keywords = meta.keywords || "";
     const url = `/blog/${slug}/`;
-    
-    const htmlContent = marked(body);
-    
+
+    const htmlContent = renderMarkdown(body);
+
     // Filter out any "Blog post" links
-    const filteredLinks = (meta.links || []).filter(link => 
-        link.label.toLowerCase() !== 'blog post' && 
+    const filteredLinks = (meta.links || []).filter(link =>
+        link.label.toLowerCase() !== 'blog post' &&
         link.label.toLowerCase() !== 'blogpost'
     );
-    
+
     let linksHtml = '';
     if (filteredLinks.length > 0) {
         linksHtml += '<br /><br /><ul class="links">\n';
@@ -111,7 +125,7 @@ const convertBlogPost = async (slug) => {
         }
         linksHtml += '</ul>\n';
     }
-    
+
     let template = await fs.readFile("template-blog.html", 'utf8');
     template = template.replace(/{{TITLE}}/g, title);
     template = template.replace(/{{DESCRIPTION}}/g, description);
@@ -120,10 +134,10 @@ const convertBlogPost = async (slug) => {
     template = template.replace(/{{DATE}}/g, date);
     template = template.replace(/{{BODY}}/g, htmlContent);
     template = template.replace(/{{LINKS}}/g, linksHtml);
-    
+
     await fs.writeFile(path.join(destDir, 'index.html'), template);
     console.log(`Converted blog post ${slug}`);
-    
+
     // Copy blog-specific assets if they exist
     const sourceAssets = path.join(postDir, 'assets');
     const destAssets = path.join(destDir, 'assets');
@@ -148,7 +162,7 @@ const convertBlogPost = async (slug) => {
 const generateRssFeed = async (posts) => {
     // Sort posts by date descending
     const sorted = [...posts].sort((a, b) => b.date.localeCompare(a.date));
-    
+
     let rss = `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
@@ -162,7 +176,7 @@ const generateRssFeed = async (posts) => {
     for (const post of sorted) {
         const pubDate = new Date(post.date).toUTCString();
         const postUrl = `${siteBaseUrl}${post.url}`;
-        
+
         rss += `    <item>
         <title>${escapeXml(post.title)}</title>
         <link>${postUrl}</link>
@@ -199,13 +213,13 @@ const convertMarkdownToHtml = async (file, blogPosts = []) => {
 
         try {
             let data = await fs.readFile(markdownPath, 'utf8');
-            
+
             // If it is index.md, inject the dynamic blog posts list
             if (file === 'index.md') {
                 const blogListHtml = generateBlogListHtml(blogPosts);
                 data = data.replace('{{BLOG_POSTS}}', blogListHtml);
             }
-            
+
             let title = "TSMR.eu";
             for (let line of data.split("\n").entries()) {
                 if (line[1].startsWith("# ")) {
@@ -213,7 +227,7 @@ const convertMarkdownToHtml = async (file, blogPosts = []) => {
                     break;
                 }
             }
-            const htmlContent = marked(data);
+            const htmlContent = renderMarkdown(data);
 
             let template = await fs.readFile("template.html", 'utf8');
             template = template.replace("{{TITLE}}", title);
@@ -230,7 +244,7 @@ const convertMarkdownToHtml = async (file, blogPosts = []) => {
 const convertAllFiles = async () => {
     try {
         await initializeBuildDir();
-        
+
         // 1. Scan and convert blog posts
         let blogPosts = [];
         try {

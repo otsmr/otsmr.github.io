@@ -1,12 +1,3 @@
-<br />
-<br />
-
-<div class="social-links">
-  <a href="https://github.com/otsmr" class="social-link github" title="GitHub"></a>
-  <a href="https://codeberg.org/tsmr" class="social-link codeberg" title="Codeberg"></a>
-  <a href="rss.xml" class="social-link rss" title="RSS Feed"></a>
-</div>
-
 Hi, I'm Tobi. I currently try my luck with Rust, Flutter and fuzzing. See what I'm working
 on below, it's nothing crazy but it's fun.
 

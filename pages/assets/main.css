@@ -7,12 +7,17 @@
     src: url('/assets/sans.woff2') format('woff2')
 }
 
+html {
+    color-scheme: dark;
+}
+
 body {
     margin: 0;
     padding: 0;
     background: #181a1b;
     color: #aaaaaa;
     font-family: 'Google Sans Code', 'Courier New', Courier, monospace;
+    overflow-x: hidden;
 }
 
 code {
@@ -192,25 +197,43 @@ footer {
     display: inline-block;
     width: 28px;
     height: 28px;
-    background-color: #888;
-    transition: background-color 0.15s ease-in-out;
+    color: #888;
+    font-size: 28px;
+    line-height: 28px;
+    text-align: center;
+    text-decoration: none;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
 }
 
 .social-link:hover {
-    background-color: #ffffff;
-}
-
-.social-link.github {
-    mask: url('icons/github.svg') no-repeat center / contain;
-    -webkit-mask: url('icons/github.svg') no-repeat center / contain;
+    color: #ffffff;
 }
 
 .social-link.codeberg {
+    background-color: #888;
     mask: url('icons/codeberg.svg') no-repeat center / contain;
     -webkit-mask: url('icons/codeberg.svg') no-repeat center / contain;
 }
 
-.social-link.rss {
-    mask: url('icons/rss.svg') no-repeat center / contain;
-    -webkit-mask: url('icons/rss.svg') no-repeat center / contain;
+.social-link.codeberg:hover {
+    background-color: #ffffff;
+}
+
+pre.mermaid {
+    background: transparent;
+    overflow-x: auto;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    max-width: 100vw;
+    display: block;
+}
+
+pre.mermaid svg {
+    display: block;
+    margin: 0 auto;
+}
+
+li {
+    font-size: 18px;
+    padding: 5px;
 }
