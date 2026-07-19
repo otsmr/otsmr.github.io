@@ -20,6 +20,10 @@ But as I want this protocol to be secure, it should ideally be verified by exter
 
 ## The Passwordless Recovery Protocol
 
+<p style="background: #121314; padding: 15px 20px; margin-bottom: 20px;">
+<strong>Update (July 19, 2026):</strong> I received feedback from a cryptography expert, who pointed out that my original trick of withholding the nonce from the server might work in practice, but it prevents a formal security proof under standard AEAD models. So I updated the protocol: Instead of the nonce, the encryption key for the serverKey is now withheld, distributed to the trusted friends, and only sent to the server during the recovery.
+</p>
+
 To enable the passwordless recovery, a user first has to select at least **T + 2** verified trusted friends (N), where T is the threshold for [Shamir's Secret Sharing](https://en.wikipedia.org/wiki/Shamir%27s_secret_sharing). The + 2 is there so that even if a couple of friends lose their phone or become unreachable, there are still enough shares left to recover. Then they can decide to enable a second factor, either a PIN or an email. From there, the user has finished their task. In the background the user's secret key is then split into multiple parts and then distributed to the selected friends. In case the second factor was enabled, these shares are further encrypted using a server key. Here is the full setup flow:
 
 ```mermaid
@@ -31,23 +35,22 @@ sequenceDiagram
     U->>U: RecoveryData = userId + secret key
 
     alt Second Factor: Email
-        U->>U: Derive encKey = SHA-256(email)
-        U->>U: generates random<br/>serverKey (32 bytes)<br/>encNonce (24 bytes)
-        U->>U: protectedServerKey, MAC = XChaCha20-Poly1305.encrypt(serverKey, encKey, encNonce)
-        U->>S: protectedServerKey + MAC
+        U->>U: Generate random<br/>serverKey (32 bytes)<br/>serverKeyProtection (32 bytes)<br/>Nonce (24 bytes)
+        U->>U: emailKey = HKDF(ikm=serverKeyProtection, salt=email)
+        U->>U: protectedServerKey, MAC = XChaCha20-Poly1305.encrypt(serverKey, emailKey, Nonce)
+        U->>S: protectedServerKey + MAC + Nonce
         U->>U: RecoveryData = XChaCha20-Poly1305.encrypt(RecoveryData, serverKey)
     else Second Factor: PIN
-        U->>U: Generate pinSeed (32 bytes)
-        U->>U: Derive encKey = HMAC-SHA-256(pin, pinSeed)
-        U->>U: generates random<br/>serverKey (32 bytes)<br/>encNonce (24 bytes)<br/>pinUnlockToken (32 bytes)
-        U->>U: protectedServerKey, MAC = XChaCha20-Poly1305.encrypt(serverKey, encKey, encNonce)
-        U->>S: protectedServerKey + MAC + pinUnlockToken
+        U->>U: Generate random<br/>serverKey (32 bytes)<br/>serverKeyProtection (32 bytes)<br/>pinUnlockToken (32 bytes)<br/>Nonce (24 bytes)
+        U->>U: pinKey = HKDF(ikm=serverKeyProtection, salt=pin)
+        U->>U: protectedServerKey, MAC = XChaCha20-Poly1305.encrypt(serverKey, pinKey, Nonce)
+        U->>S: protectedServerKey + MAC + pinUnlockToken + Nonce
         U->>U: RecoveryData = XChaCha20-Poly1305.encrypt(RecoveryData, serverKey)
     else No Second Factor
         U->>U: increase threshold T from >=2 to >=4
     end
 
-    U->>U: Bundle SharedSecretData:<br/>RecoveryData +<br/>(optional: encNonce + pinSeed + pinUnlockToken)
+    U->>U: Bundle SharedSecretData:<br/>RecoveryData +<br/>(optional: serverKeyProtection + pinUnlockToken)
 
     U->>U: Shamir split SharedSecretData<br/>into N shares (threshold T)
 
@@ -55,7 +58,7 @@ sequenceDiagram
     F->>F: Store share locally
 ```
 
-Because the server does not receive the `encNonce` (192-bit nonce), the server is unable to brute-force the user's email or PIN. But because it has the MAC, it can then during recovery ensure that it received the original user's input.
+Because the server does not receive the `serverKeyProtection` (32 bytes), the server is unable to brute-force the user's email or PIN. But because it has the MAC, it can then during recovery ensure that it received the original user's input.
 
 
 ### Recovery Flow
@@ -114,16 +117,17 @@ sequenceDiagram
     
     alt Email second factor
         R->>R: Inputs email
-        R->>S: Send userId, SharedSecretData.encNonce, email
-        S->>S: serverKey = decrypt(protectedServerKey, key=SHA-256(email), encNonce, MAC)
+        R->>S: Send userId, SharedSecretData.serverKeyProtection, email
+        S->>S: emailKey = HKDF(ikm=serverKeyProtection, salt=email)
+        S->>S: serverKey = XChaCha20-Poly1305.decrypt(protectedServerKey, emailKey, stored Nonce, stored MAC)
         S->>I: Send serverKey
         I->>R: Copy serverKey
         R->>R: Decrypt RecoveryData<br/>with serverKey
     else PIN second factor
-        R->>R: Derive key = HMAC-SHA-256(pin, SharedSecretData.pinSeed)
-        R->>S: Send userId, key + SharedSecretData.encNonce<br/>+ SharedSecretData.pinUnlockToken
+        R->>R: pinKey = HKDF(ikm=SharedSecretData.serverKeyProtection,<br/>salt=pin)
+        R->>S: Send userId, pinKey + SharedSecretData.pinUnlockToken
         S->>S: Check pinUnlockToken
-        S->>S: serverKey = decrypt(protectedServerKey, key, encNonce, MAC)<br/>(~10 tries max)
+        S->>S: serverKey = XChaCha20-Poly1305.decrypt(protectedServerKey, pinKey, stored Nonce, stored MAC)<br/>(~10 tries max)
         S->>R: Return serverKey
         R->>R: Decrypt RecoveryData<br/>with serverKey
     else No second factor
