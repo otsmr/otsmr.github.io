@@ -1,53 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{LANG}}">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="assets/main.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="assets/favicon.jpg" type="image/jpg">
-    <link rel="stylesheet" href="assets/atom-one-dark.min.css">
-    <link rel="stylesheet" href="assets/css/v5-font-face.min.css">
-    <link rel="stylesheet" href="assets/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{TITLE}}</title>
-    <meta name="description" content="Something with IT security">
-    <meta name="keywords" content="Rust, security, fuzzing, IT security, Flutter">
+    <meta name="description" content="{{DESCRIPTION}}">
+    <meta name="author" content="{{AUTHOR}}">
+    <meta name="robots" content="{{ROBOTS}}">
+    <link rel="canonical" href="{{CANONICAL}}">
+
+    <meta property="og:site_name" content="TSMR.eu">
+    <meta property="og:locale" content="{{OG_LOCALE}}">
+    <meta property="og:type" content="{{OG_TYPE}}">
+    <meta property="og:title" content="{{OG_TITLE}}">
+    <meta property="og:description" content="{{DESCRIPTION}}">
+    <meta property="og:url" content="{{CANONICAL}}">
+    <meta property="og:image" content="{{IMAGE}}">
+    <meta name="twitter:card" content="{{TWITTER_CARD}}">
+    <meta name="fediverse:creator" content="@tsmreu@infosec.exchange">
+{{HEAD_EXTRA}}
+    <meta name="theme-color" content="#181a1b">
+    <link rel="preload" href="/assets/fonts/OpenSans.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/assets/main.css">
+{{STYLES}}
+    <link rel="icon" href="/assets/favicon.jpg" type="image/jpeg">
+    <link rel="apple-touch-icon" href="/assets/favicon.jpg">
+    <link rel="alternate" type="application/rss+xml" title="TSMR.eu" href="/rss.xml">
 </head>
 
 <body>
-    <div class="container">
-        <a href="index.html" style="text-decoration: none;">
-            <h1 id="header" style="color: #fff;display: flex;">
-                <div class="block">T</div>
-                <div class="block">S</div>
-                <div class="block">M</div>
-                <div class="block">R</div>
-            </h1>
-        </a>
-        <p style="text-align: center;margin: 6px 0;"><small>Something with IT security</small></p>
-        <div class="social-links">
-            <a href="https://github.com/otsmr" class="social-link" title="GitHub"><i
-                    class="fa-brands fa-github"></i></a>
-            <a href="https://codeberg.org/tsmr" class="social-link codeberg" title="Codeberg"></a>
-            <a rel="me" href="https://infosec.exchange/@tsmreu" class="social-link" title="Mastodon"><i
-                    class="fa-brands fa-mastodon"></i></a>
-            <a href="/rss.xml" class="social-link" title="RSS Feed"><i class="fa-solid fa-rss"></i></a>
-        </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        {{BODY}}
-    </div>
+    <header class="site-header">
+        <{{HEADER_TAG}} class="site-title">
+            <a href="/" class="logo" aria-label="TSMR – Home">
+                <span class="block">T</span><span class="block">S</span><span class="block">M</span><span class="block">R</span>
+            </a>
+            <span class="tagline">Where usability meets security and privacy</span>
+        </{{HEADER_TAG}}>
+        <nav class="social-links" aria-label="Elsewhere">
+            <a href="https://github.com/otsmr" class="social-link github" title="GitHub" aria-label="GitHub"></a>
+            <a href="https://codeberg.org/tsmr" class="social-link codeberg" title="Codeberg" aria-label="Codeberg"></a>
+            <a rel="me" href="https://infosec.exchange/@tsmreu" class="social-link mastodon" title="Mastodon" aria-label="Mastodon"></a>
+            <a href="/rss.xml" class="social-link rss" title="RSS Feed" aria-label="RSS Feed"></a>
+        </nav>
+    </header>
 
-    <footer>
+    <main class="container">
+{{BODY}}
+    </main>
+
+    <footer class="site-footer">
         <ul class="links">
             <li><a href="/">Home</a></li>
             <li><a href="/privacy.html">Privacy</a></li>
         </ul>
     </footer>
-    <script src="assets/mouse-effect.js"></script>
+
+{{SCRIPTS}}
     <script defer src="https://umami.twonly.eu/script.js"
         data-website-id="6bfb452a-f508-4f2e-9b5b-69141a445ea7"></script>
 </body>
+
+</html>

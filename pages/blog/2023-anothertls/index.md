@@ -10,10 +10,10 @@ links:
 
 # Implementing TLSv1.3 to Learn Rust and Cryptography
 
-This is the HTML version of my term paper which can be downloaded as PDF
-[here](https://github.com/otsmr/AnotherTLS/blob/21dd819d84457801e3f3efbb4013f61ceec07c1c/AnotherTLS.pdf).
-The Code from AnotherTLS can be found [here](https://github.com/otsmr/anothertls) and VulnTLS
-[here](https://github.com/otsmr/vulntls).
+This is the HTML version of my term paper, which can also be
+[downloaded as PDF](https://github.com/otsmr/AnotherTLS/blob/21dd819d84457801e3f3efbb4013f61ceec07c1c/AnotherTLS.pdf).
+The code can be found on GitHub: [AnotherTLS](https://github.com/otsmr/anothertls) and
+[VulnTLS](https://github.com/otsmr/vulntls).
 
 To learn Rust and cryptography at the same time, implementing the Transport Security Layer Protocol
 Version 3 (TLSv1.3) can be a very good starting point. As good as any modern cryptography can be
@@ -406,7 +406,7 @@ CLIENT_TRAFFIC_SECRET_0 71f0... 1491...68ea
 The TLS handshake needs at least three TCP packets (represented by the arrow) which holds one or
 more TLS records.
 
-<p style="text-align: center"><img src="assets/handshake.png" style="width:90.0%" /></p>
+<p style="text-align: center"><img src="assets/handshake.png" style="width:90.0%" alt="TLSv1.3 handshake: the client sends ClientHello, the server answers with ServerHello, EncryptedExtensions, Certificate, CertificateVerify and Finished, the client replies with its Finished message, then both exchange application data." /></p>
 
 Each record which is sent during the TLS connection is represented by a box. Gray boxes are
 transmitted in plaintext, blue indicate records encrypted using the handshake traffic secret and
