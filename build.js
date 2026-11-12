@@ -270,6 +270,9 @@ const renderPage = async (vars) => {
         OG_TYPE: 'website',
         HEAD_EXTRA: '',
         HEADER_TAG: 'div',
+        BODY_CLASS: '',
+        HEADER_INTRO: '',
+        HEADER_PORTRAIT: '',
         ...assetsFor(vars.BODY),
         ...vars,
     });
@@ -437,10 +440,13 @@ const convertMarkdownToHtml = async (file, blogPosts = []) => {
 
     try {
         let data = await fs.readFile(markdownPath, 'utf8');
+        let headerIntro = '';
 
-        // If it is index.md, inject the dynamic blog posts list
+        // Keep the homepage introduction with the header and the posts in main.
         if (isIndex) {
-            data = data.replace('{{BLOG_POSTS}}', generateBlogListHtml(blogPosts));
+            const [intro, olderPosts = ''] = data.split('{{BLOG_POSTS}}');
+            headerIntro = renderMarkdown(intro);
+            data = generateBlogListHtml(blogPosts) + '\n' + olderPosts;
         }
 
         let heading = null;
@@ -498,6 +504,9 @@ const convertMarkdownToHtml = async (file, blogPosts = []) => {
             CANONICAL: canonical,
             ...(noindexPages.has(file) ? { ROBOTS: 'noindex, follow' } : {}),
             HEADER_TAG: isIndex ? 'h1' : 'div',
+            BODY_CLASS: isIndex ? 'home-page' : '',
+            HEADER_INTRO: headerIntro,
+            HEADER_PORTRAIT: isIndex ? '        <div class="portrait-mark"><img class="profile-photo" src="/assets/profile.jpg" alt="Tobi" width="400" height="400" draggable="false" loading="eager" decoding="async"></div>' : '',
             HEAD_EXTRA: headExtra,
             BODY: renderMarkdown(data),
         });

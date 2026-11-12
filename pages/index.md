@@ -1,8 +1,12 @@
-Hi, I'm Tobi. These days I spend most of my time on [twonly](https://twonly.eu), a privacy-friendly
-alternative to Snapchat. I love it because it gives me a reason to design new protocols, like the
-[passwordless recovery](/blog/2026-passwordless-recovery/) or the
-[Snapchat Memories import](/blog/2026-snapchat-import/). Below you'll find what I've been working on.
-It's nothing crazy, but it's fun.
+<section class="home-intro" aria-label="About Tobi">
+<div class="home-intro-text">
+
+Hi, I'm Tobi. I work on usable security and privacy. Right now I'm mostly focused on building
+[twonly](https://twonly.eu), a privacy-friendly Snapchat alternative. Here I write about what I'm
+working on.
+
+</div>
+</section>
 
 {{BLOG_POSTS}}
 
